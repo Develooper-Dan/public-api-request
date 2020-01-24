@@ -43,7 +43,8 @@ async function createGallery(){
 
   $(".gallery").on("click", ".card", (e) =>{
     const targetName = $(e.currentTarget).find(".card-name").text();
-    createModal(targetName, dataArray);
+    const targetIndex = $(":visible").toArray().indexOf(e.currentTarget);
+    createModal(targetName, targetIndex, dataArray);
   });
 }
 
@@ -69,9 +70,8 @@ function createSearchBar(){
   })
 }
 
-function createModal(name, dataArray) {
+function createModal(name, employeeIndex, dataArray) {
   const clickedEmployee =  dataArray.find(employee => employee.name === name);
-  const employeeIndex = dataArray.indexOf(clickedEmployee);
   let htmlString = `
     <div class="modal-container">
         <div class="modal">
@@ -93,11 +93,11 @@ function createModal(name, dataArray) {
         </div>
       </div>`;
   $(htmlString).insertAfter(".gallery");
-//todo
-  if(employeeIndex===0 || $(":visible").find()"){
+
+  if(employeeIndex===0){
     $("#modal-prev").remove()
   }
-  if(employeeIndex===dataArray.length-1 || ){
+  if(employeeIndex===dataArray.length-1){
     $("#modal-next").remove()
   }
 
@@ -112,13 +112,13 @@ function modalEventListeners(employeeIndex, dataArray){
   $("#modal-prev").on("click", () =>{
     $(".modal-container").remove()
     const prevEmployee = dataArray[employeeIndex - 1];
-    createModal(prevEmployee.name, dataArray)
+    createModal(prevEmployee.name, employeeIndex - 1, dataArray)
   });
 
   $("#modal-next").on("click", () =>{
     $(".modal-container").remove()
     const nextEmployee = dataArray[employeeIndex + 1];
-    createModal(nextEmployee.name, dataArray)
+    createModal(nextEmployee.name, employeeIndex +1, dataArray)
   });
 }
 
