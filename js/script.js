@@ -42,9 +42,10 @@ async function createGallery(){
   $(".gallery").html(htmlString);
 
   $(".gallery").on("click", ".card", (e) =>{
+    const visibleEmployees = $(".card:visible").toArray();
+    const targetIndex = $(".card:visible").index(e.currentTarget);
     const targetName = $(e.currentTarget).find(".card-name").text();
-    const targetIndex = $(":visible").toArray().indexOf(e.currentTarget);
-    createModal(targetName, targetIndex, dataArray);
+    createModal(targetName, targetIndex, visibleEmployees);
   });
 }
 
@@ -70,7 +71,8 @@ function createSearchBar(){
   })
 }
 
-function createModal(name, employeeIndex, dataArray) {
+async function createModal(name, employeeIndex, visibleEmployees) {
+  const dataArray = await requestedJSON;
   const clickedEmployee =  dataArray.find(employee => employee.name === name);
   let htmlString = `
     <div class="modal-container">
@@ -97,28 +99,30 @@ function createModal(name, employeeIndex, dataArray) {
   if(employeeIndex===0){
     $("#modal-prev").remove()
   }
-  if(employeeIndex===dataArray.length-1){
+  if(employeeIndex===visibleEmployees.length-1){
     $("#modal-next").remove()
   }
 
-  modalEventListeners(employeeIndex, dataArray);
+  modalEventListeners(employeeIndex, visibleEmployees);
 }
 
-function modalEventListeners(employeeIndex, dataArray){
+function modalEventListeners(employeeIndex, visibleEmployees){
   $(".modal-close-btn").on("click", () =>{
     $(".modal-container").remove()
   });
 
   $("#modal-prev").on("click", () =>{
     $(".modal-container").remove()
-    const prevEmployee = dataArray[employeeIndex - 1];
-    createModal(prevEmployee.name, employeeIndex - 1, dataArray)
+    const prevEmployee = visibleEmployees[employeeIndex - 1];
+    const prevName = $(prevEmployee).find(".card-name").text()
+    createModal(prevName, employeeIndex - 1, visibleEmployees)
   });
 
   $("#modal-next").on("click", () =>{
     $(".modal-container").remove()
-    const nextEmployee = dataArray[employeeIndex + 1];
-    createModal(nextEmployee.name, employeeIndex +1, dataArray)
+    const nextEmployee = visibleEmployees[employeeIndex + 1];
+    const nextName = $(nextEmployee).find(".card-name").text()
+    createModal(nextName, employeeIndex + 1, visibleEmployees)
   });
 }
 
