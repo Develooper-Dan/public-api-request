@@ -124,7 +124,7 @@ Event listeners
     createModal(targetName, targetIndex, visibleEmployees);
   });
 /* Submit listener for the search input field. Matches if either the first or last name of an employee
-starts with the entered character(s) and hides all employee cars whitch aren't matched
+starts with the entered character(s) and hides all employee cards whitch aren't matched
 */
 $(".search-container").on("submit", "form", (e) =>{
   e.preventDefault()
@@ -138,7 +138,7 @@ $(".search-container").on("submit", "form", (e) =>{
     }
   });
 })
-//The listeners for the prev/next and the "close" button.
+//The listeners for the prev/next and the "close" button on a modal.
 function modalEventListeners(employeeIndex, visibleEmployees){
   $(".modal-close-btn").on("click", () =>{
     $(".modal-container").remove()
