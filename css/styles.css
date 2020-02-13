@@ -27,12 +27,14 @@
 html, body {
     width: 100%;
     max-width: 100%;
+
 }
 
 body {
     font-family: "Nunito", sans-serif;
     text-align: center;
-    background: #2f5490;
+    color: #e0e46c;
+    background-image: url("https://pixabay.com/get/54e4dc414a53ac14f6d1867dda6d49214b6ac3e45659704c7c2d79d796/cubes-2492010_1920.jpg");
 }
 
 header {
@@ -78,7 +80,13 @@ header h1 {
     border: 1px solid rgba(50, 50, 50, 0.9);
 }
 
-
+.error{
+  margin-top: 30px;
+}
+.no-results{
+  font-style: italic;
+  font-weight: lighter;
+}
 /* =====================================
    Gallery
 ======================================== */
@@ -103,9 +111,9 @@ header h1 {
     max-width: 360px;
     margin: 10px 10px 20px;
     padding: 10px;
-    background: rgba(245, 245, 245, 0.9);
+    background: #d3d4d5;
     border-radius: 0.25em;
-    border: 1px solid rgba(50, 50, 50, 0.3);
+    border: 1px solid ##b8bdc2;
     transition: .3s ease-out;
     overflow: hidden;
 }
@@ -123,6 +131,7 @@ header h1 {
 .card-name {
     margin: 20px auto 0;
     font-family: 'startrackregular', sans-serif;
+    color: rgb(0, 0, 0);
 }
 
 .card-text {
@@ -185,6 +194,7 @@ header h1 {
 .modal-name {
     margin-bottom: 5px;
     font-family: 'startrackregular', sans-serif;
+    color: rgb(0, 0, 0)
 }
 
 .modal-text {
@@ -255,6 +265,17 @@ header h1 {
         margin-top: 25px;
     }
 
+    .card:hover {
+        background: rgba(255, 255, 255, 1);
+    }
+    .card:hover .card-text {
+        color: rgba(25, 25, 25, 1);
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 1);
+      color: rgba(25, 25, 25, 1);
+    }
     .modal {
         margin-top: 100px;
     }
@@ -270,20 +291,9 @@ header h1 {
 
     .card:hover {
         background: rgba(255, 255, 255, 1);
-        border: 1px solid rgba(50, 50, 50, 0.9);
 				transform: scale(1.08);
 			  -moz-box-shadow:    5px 5px 4px #ccc;
 			  -webkit-box-shadow: 5px 5px 4px #ccc;
 			  box-shadow:         5px 5px 4px #ccc;
 }
     }
-
-    .card:hover .card-text {
-        color: rgba(25, 25, 25, 1);
-    }
-
-    .btn:hover {
-        background: rgba(255, 255, 255, 1);
-        color: rgba(25, 25, 25, 1);
-    }
-}
