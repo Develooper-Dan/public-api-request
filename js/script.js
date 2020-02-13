@@ -8,8 +8,7 @@ more concise and easier to access compared to the raw JSON data. If an error occ
 const requestedJSON = fetch("https://randomuser.me/api?results=12")
  .then( (data) => {
    if(!data.ok){
-     $("header").hide();
-     $("body").html(`<h2>An error occured: ${status} ${statusText}</h2>`);
+     throw Error(`${data.status} ${data.statusText}`);
    }
    return data.json();
  })
@@ -33,7 +32,7 @@ const requestedJSON = fetch("https://randomuser.me/api?results=12")
  })
  .catch( (error) => {
    $("header").hide();
-   $("body").html(`<h2>There was a problem with your request: ${error}</h2>`);
+   $("body").html(`<h2 class="error">There was a problem with your request: ${error}</h2>`);
 })
 // Waits for the data from the fetch request and then creates the gallery out of the employee-objects
 async function createGallery(){
@@ -124,10 +123,13 @@ Event listeners
     createModal(targetName, targetIndex, visibleEmployees);
   });
 /* Submit listener for the search input field. Matches if either the first or last name of an employee
-starts with the entered character(s) and hides all employee cards whitch aren't matched
+starts with the entered character(s) and hides all employee cards which aren't matched
 */
-$(".search-container").on("submit", "form", (e) =>{
+$(".search-container").on("submit keyup", "form", (e) =>{
   e.preventDefault()
+  if($(".no-results")){
+    $(".no-results").remove()
+  }
   const input = $(".search-input").val().toLowerCase();
   $(".card").each( function(){
     const employeeName = $(this).find(".card-name").text().toLowerCase();
@@ -137,6 +139,13 @@ $(".search-container").on("submit", "form", (e) =>{
       $(this).hide();
     }
   });
+  // Displays a message if the search doesn't yield any results
+  if($(".card:visible").length === 0){
+    const noResults = document.createElement("h2");
+    noResults.className = "no-results";
+    noResults.textContent = "Your search returned no results...";
+    $("#gallery").append(noResults);
+  }
 })
 //The listeners for the prev/next and the "close" button on a modal.
 function modalEventListeners(employeeIndex, visibleEmployees){
